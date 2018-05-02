@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { auth } from '../firebase';
+import firebase, { auth } from '../firebase';
 
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
@@ -29,6 +29,7 @@ class Login extends Component {
         }
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.googleSignin = this.googleSignin.bind(this);
     }
 
     onSubmit(event) {
@@ -41,6 +42,28 @@ class Login extends Component {
         .catch(authError => {
             alert(authError);
         })
+    }
+
+    googleSignin(event){
+
+        let provider = new firebase.auth.GoogleAuthProvider()
+        auth.signInWithPopup(provider).then(function(result) {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+          // ...
+        }).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // The email of the user's account used.
+          var email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
+          // ...
+        });
+
     }
 
     handleChange = name => event => {
@@ -78,9 +101,15 @@ class Login extends Component {
                               type="password"
                             />
                             <br />
+                            <br />
                             <Button variant="raised" color="primary" type="submit">Log in</Button>
                         </form>
+                        <br />
+                              <Button onClick={ this.googleSignin } variant="raised" color="secondary" className={classes.button}>
+                                Sign in with google
+                              </Button>
                         <p>Don't have an account? <Link to="/signup">Sign up here</Link></p>
+                        <p>Forgot Password? <Link to="/forgot">Click here</Link></p>
                     </Paper>
                 </Grid>
             </Grid>

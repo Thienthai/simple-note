@@ -18,7 +18,7 @@ const styles = theme => ({
   },
 });
 
-class Signup extends Component {
+class Forgot extends Component {
 
     constructor(props) {
         super(props);
@@ -33,20 +33,27 @@ class Signup extends Component {
     onSubmit(event) {
         event.preventDefault();
         const { email, password } = this.state;
-        auth.createUserWithEmailAndPassword(email, password)
-        .then(authUser => {
-            console.log(authUser);
-            var user = authUser;
-
-            user.sendEmailVerification().then(function() {
+        auth.sendPasswordResetEmail(email).then(function() {
+            alert("sucess check your email");
+            window.location.assign("http://localhost:3000/");
             // Email sent.
-            }).catch(function(error) {
+        }).catch(function(error) {
             // An error happened.
-            });
-        })
-        .catch(authError => {
-            alert(authError);
-        })
+        });
+        // auth.createUserWithEmailAndPassword(email, password)
+        // .then(authUser => {
+        //     console.log(authUser);
+        //     var user = authUser;
+
+        //     user.sendEmailVerification().then(function() {
+        //     // Email sent.
+        //     }).catch(function(error) {
+        //     // An error happened.
+        //     });
+        // })
+        // .catch(authError => {
+        //     alert(authError);
+        // })
     }
 
     handleChange = name => event => {
@@ -63,7 +70,8 @@ class Signup extends Component {
                 <Grid container>
                     <Grid item xs={12}>
                         <Paper className={classes.paper}>
-                            <h1>Sign up</h1>
+                            <h1>Forgot Password</h1>
+                            <p>Enter your email to recieve a new password</p>
                             <form onSubmit={this.onSubmit} autoComplete="off">
                                 <TextField
                                   id="email"
@@ -75,17 +83,7 @@ class Signup extends Component {
                                   type="email"
                                 />
                                 <br />
-                                <TextField
-                                  id="password"
-                                  label="Password"
-                                  className={classes.textField}
-                                  value={password}
-                                  onChange={this.handleChange('password')}
-                                  margin="normal"
-                                  type="password"
-                                />
-                                <br />
-                                <Button variant="raised" color="primary" type="submit">Sign up</Button>
+                                <Button variant="raised" color="primary" type="submit">Send</Button>
                             </form>
                         </Paper>
                     </Grid>
@@ -95,4 +93,4 @@ class Signup extends Component {
     }
 }
 
-export default withStyles(styles)(Signup);
+export default withStyles(styles)(Forgot);
