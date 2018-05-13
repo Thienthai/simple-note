@@ -99,9 +99,12 @@ class Main extends Component {
         const classes = this.props.classes;
         return (
             <Grid container className={classes.container}>
-                <Grid item xs={6}>
+            <Grid item xs={4}>
+                    </Grid>
+                <Grid item xs={4}>
                     <Paper className={classes.paper}>
                         <p>Hello { auth.currentUser.displayName }, { auth.currentUser.email }</p>
+                        <p>Verification: { auth.currentUser.emailVerified.toString() }</p>
                         <p><Link to="/profile">Edit Profile</Link></p>
                             <List className={classes.list}>
                                 { /* Render the list of messages */
@@ -130,6 +133,8 @@ class Main extends Component {
                             </form>
                     </Paper>
                 </Grid>
+                <Grid item xs={4}>
+                    </Grid>
             </Grid>
         );
     }

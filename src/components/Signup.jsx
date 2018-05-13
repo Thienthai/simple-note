@@ -16,6 +16,13 @@ const styles = theme => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
+  test: {
+    fontFamily:'Tahoma', 
+    fontWeight: 100, 
+    fontSize: 29,
+    color: '#263330',
+    marginBottom: -4,
+  }
 });
 
 class Signup extends Component {
@@ -28,6 +35,7 @@ class Signup extends Component {
         }
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+
     }
 
     onSubmit(event) {
@@ -37,7 +45,7 @@ class Signup extends Component {
         .then(authUser => {
             console.log(authUser);
             var user = authUser;
-
+            alert("successfully create your account please check your email verification");
             user.sendEmailVerification().then(function() {
             // Email sent.
             }).catch(function(error) {
@@ -47,6 +55,12 @@ class Signup extends Component {
         .catch(authError => {
             alert(authError);
         })
+        // auth.createUserWithEmailAndPassword(email, password).catch(authError => {
+        //     alert(authError);
+        //     return;
+        // })
+        // alert("successfully create account please check your email");
+
     }
 
     handleChange = name => event => {
@@ -61,9 +75,11 @@ class Signup extends Component {
         return (
             <div>
                 <Grid container>
-                    <Grid item xs={12}>
+                    <Grid item xs={4}>
+                    </Grid>
+                    <Grid item xs={4}>
                         <Paper className={classes.paper}>
-                            <h1>Sign up</h1>
+                            <h1 className={classes.test}>Sign up</h1>
                             <form onSubmit={this.onSubmit} autoComplete="off">
                                 <TextField
                                   id="email"
@@ -89,6 +105,8 @@ class Signup extends Component {
                             </form>
                         </Paper>
                     </Grid>
+                  <Grid item xs={4}>
+                  </Grid>
                 </Grid>
             </div>
         );

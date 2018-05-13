@@ -8,6 +8,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import { CircularProgress } from 'material-ui/Progress';
 import Button from 'material-ui/Button';
+import Grid from 'material-ui/Grid';
 
 import PrivateRoute from './PrivateRoute';
 import Main from './Main';
@@ -15,8 +16,16 @@ import Login from './Login';
 import Signup from './Signup';
 import Forgot from './Forgot';
 import Profile from './Profile';
+import blue from 'material-ui/colors/blue';
 
 const theme = createMuiTheme();
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  align: "right"
+});
 
 class App extends Component {
 
@@ -25,10 +34,13 @@ class App extends Component {
         this.state = {
             loading: true,
             authenticated: false,
-            currentUser: null };
-        }
+            currentUser: null,
+            verification: false
+        };
+    }
 
     componentWillMount() { auth.onAuthStateChanged(user => {
+
         if (user) {
             this.setState({
                 authenticated: true,
@@ -48,6 +60,7 @@ class App extends Component {
 
     render () {
         const { authenticated, loading } = this.state;
+        const classes = this.props.classes;
         const content = loading ? (
             <div align="center">
                 <CircularProgress size={80} thickness={5} />
@@ -64,21 +77,29 @@ class App extends Component {
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/forgot" component={Forgot} />
                 <Route exact path="/profile" component={Profile} />
+                <Route exact path="/main" component={Main} />
             </div>
         );
         return (
             <MuiThemeProvider theme={theme}>
-                <div>
-                    <AppBar position="static" color="default">
+                <div align="center">
+                    <Grid item xs={4}>
+                    </Grid>
+                    <Grid item xs={4}>
+                    <AppBar styles="opacity:80%" position="static" background-color="#ea3f3f">
                         <Toolbar>
                             <Typography variant="title" color="inherit">
-                                Simple Note
+                                SimpleNote
                             </Typography>
+                            &nbsp;&nbsp;
                             { authenticated &&
-                                <Button variant="raised" color="default" onClick={() => auth.signOut()}>Log out</Button>
+                                <Button className="button" size="small" variant="raised" color="secondary" onClick={() => auth.signOut()}>Log out</Button>
                             }
                         </Toolbar>
                     </AppBar>
+                    </Grid>
+                    <Grid item xs={4}>
+                    </Grid>
                     { content }
                 </div>
             </MuiThemeProvider>

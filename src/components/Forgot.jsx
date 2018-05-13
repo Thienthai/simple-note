@@ -16,6 +16,13 @@ const styles = theme => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
+    test: {
+    fontFamily:'Tahoma', 
+    fontWeight: 100, 
+    fontSize: 29,
+    color: '#263330',
+    marginBottom: -4,
+  }
 });
 
 class Forgot extends Component {
@@ -34,12 +41,13 @@ class Forgot extends Component {
         event.preventDefault();
         const { email, password } = this.state;
         auth.sendPasswordResetEmail(email).then(function() {
-            alert("sucess check your email");
-            window.location.assign("http://localhost:3000/");
             // Email sent.
         }).catch(function(error) {
             // An error happened.
         });
+        alert("Email has been sent please fill out the form to reset password");
+        window.location.reload();
+        this.setState(() => { this.props.history.push('/login') });
         // auth.createUserWithEmailAndPassword(email, password)
         // .then(authUser => {
         //     console.log(authUser);
@@ -68,9 +76,11 @@ class Forgot extends Component {
         return (
             <div>
                 <Grid container>
-                    <Grid item xs={12}>
+                <Grid item xs={4}>
+                </Grid>
+                    <Grid item xs={4}>
                         <Paper className={classes.paper}>
-                            <h1>Forgot Password</h1>
+                            <h1 className={classes.test}>Forgot Password</h1>
                             <p>Enter your email to recieve a new password</p>
                             <form onSubmit={this.onSubmit} autoComplete="off">
                                 <TextField
@@ -87,6 +97,8 @@ class Forgot extends Component {
                             </form>
                         </Paper>
                     </Grid>
+                    <Grid item xs={4}>
+                  </Grid>
                 </Grid>
             </div>
         );

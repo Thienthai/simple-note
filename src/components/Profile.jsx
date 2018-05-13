@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Route, withRouter } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { withStyles } from 'material-ui/styles';
 import { Link } from 'react-router-dom';
@@ -12,6 +13,8 @@ import CreateIcon from '@material-ui/icons/Create';
 
 import Icon from 'material-ui/Icon';
 import AddIcon from '@material-ui/icons/Add';
+import  { Redirect } from 'react-router-dom'
+import Main from './Main';
 
 const styles = theme => ({
     root: {
@@ -64,10 +67,12 @@ class Profile extends Component {
 		  displayName: name
 		}).then(function() {
 		  // Update successful.
-		  window.location.assign("http://localhost:3000/");
 		}).catch(function(error) {
 		  // An error happened.
 		});
+		// this.setState(() => { this.props.history.push('/main') });
+  //       window.location.reload();
+
     }
 
     setEmail(event){
@@ -77,18 +82,21 @@ class Profile extends Component {
 
 		user.updateEmail(email).then(function() {
 		  // Update successful.
-		  window.location.assign("http://localhost:3000/");
 		}).catch(function(error) {
 		  // An error happened.
 		  alert(error);
 		});
+		// window.location.reload();
+		// this.setState(() => { this.props.history.push('/main') });
     }
 
     render() {
         const classes = this.props.classes;
         return (
             <Grid container className={classes.container}>
-                <Grid item xs={6}>
+            <Grid item xs={4}>
+                    </Grid>
+                <Grid item xs={4}>
                     <Paper className={classes.paper}>
                     	<h1>Edit Profile</h1>
                     	    
@@ -119,6 +127,8 @@ class Profile extends Component {
                           
                     </Paper>
                 </Grid>
+                <Grid item xs={4}>
+                    </Grid>
             </Grid>
         );
     }
